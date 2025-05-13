@@ -25,7 +25,10 @@ class TestDriverCreationForm(TestCase):
 
     def test_driver_creation_form_valid_data(self):
         self.assertTrue(self.form.is_valid())
-        self.assertEqual(self.form.cleaned_data, self.form_data)
+        self.assertEqual(self.form.cleaned_data["username"], self.form_data["username"])
+        self.assertEqual(self.form.cleaned_data["first_name"], self.form_data["first_name"])
+        self.assertEqual(self.form.cleaned_data["last_name"], self.form_data["last_name"])
+        self.assertEqual(self.form.cleaned_data["license_number"], self.form_data["license_number"])
 
     def test_is_license_number_valid(self):
         self.form.is_valid()

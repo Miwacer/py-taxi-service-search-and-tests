@@ -41,7 +41,7 @@ class DriverLicenseUpdateForm(forms.ModelForm):
         return validate_license_number(self.cleaned_data["license_number"])
 
 
-def validate_license_number(license_number, ) -> bool:
+def validate_license_number(license_number) -> bool:
     pattern = r"^[A-Z]{3}\d{5}$"
     if not re.fullmatch(pattern, license_number):
         raise ValidationError(

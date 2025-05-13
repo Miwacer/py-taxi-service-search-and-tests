@@ -17,7 +17,14 @@ class PublicCarViewsTests(TestCase):
 
 class PrivateCarViewsTests(TestCase):
     def setUp(self):
-        PrivateIndexViewTests.setUp(self)
+        self.user = get_user_model().objects.create_user(
+            username="testuser", password="testpass123"
+        )
+        self.client.force_login(self.user)
+
+        self.manufacturer = Manufacturer.objects.create(name="TestMaker", country="TestLand")
+        self.car = Car.objects.create(model="Test Model", manufacturer=self.manufacturer)
+        self.car.drivers.add(self.user)
 
     def test_car_list_view(self):
         res = self.client.get(CAR_LIST_URL)
