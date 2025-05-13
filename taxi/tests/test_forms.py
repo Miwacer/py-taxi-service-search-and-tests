@@ -24,15 +24,26 @@ class TestDriverCreationForm(TestCase):
     def test_driver_creation_form_valid_data(self):
         form = DriverCreationForm(data=self.form_data)
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data["username"], self.form_data["username"])
-        self.assertEqual(form.cleaned_data["first_name"], self.form_data["first_name"])
-        self.assertEqual(form.cleaned_data["last_name"], self.form_data["last_name"])
-        self.assertEqual(form.cleaned_data["license_number"], self.form_data["license_number"])
+        self.assertEqual(
+            form.cleaned_data["username"], self.form_data["username"]
+        )
+        self.assertEqual(
+            form.cleaned_data["first_name"], self.form_data["first_name"]
+        )
+        self.assertEqual(
+            form.cleaned_data["last_name"], self.form_data["last_name"]
+        )
+        self.assertEqual(
+            form.cleaned_data["license_number"],
+            self.form_data["license_number"],
+        )
 
     def test_is_license_number_valid(self):
         form = DriverCreationForm(data=self.form_data)
         form.is_valid()
-        self.assertTrue(validate_license_number(form.cleaned_data["license_number"]))
+        self.assertTrue(
+            validate_license_number(form.cleaned_data["license_number"])
+        )
 
     def test_is_license_number_invalid(self):
         invalid_data = self.form_data.copy()
@@ -43,7 +54,8 @@ class TestDriverCreationForm(TestCase):
             validate_license_number(invalid_data["license_number"])
         self.assertEqual(
             str(context.exception.messages[0]),
-            "License number must consist of exactly three uppercase letters followed by five digits."
+            "License number must consist of exactly three uppercase "
+            "letters followed by five digits."
         )
 
 
@@ -52,7 +64,9 @@ class TestDriverSearchForm(TestCase):
         form_data = {"username": "test_user"}
         form = DriverSearchForm(data=form_data)
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data.get("username"), form_data.get("username"))
+        self.assertEqual(
+            form.cleaned_data.get("username"), form_data.get("username")
+        )
 
     def test_driver_search_form_field_label(self):
         form = DriverSearchForm()
@@ -71,7 +85,9 @@ class TestCarSearchForm(TestCase):
         form_data = {"model": "test_model"}
         form = CarSearchForm(data=form_data)
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data.get("model"), form_data.get("model"))
+        self.assertEqual(
+            form.cleaned_data.get("model"), form_data.get("model")
+        )
 
     def test_car_search_form_field_label(self):
         form = CarSearchForm()
@@ -90,7 +106,9 @@ class TestManufacturerSearchForm(TestCase):
         form_data = {"name": "test_name"}
         form = ManufacturerSearchForm(data=form_data)
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data.get("name"), form_data.get("name"))
+        self.assertEqual(
+            form.cleaned_data.get("name"), form_data.get("name")
+        )
 
     def test_manufacturer_search_form_field_label(self):
         form = ManufacturerSearchForm()

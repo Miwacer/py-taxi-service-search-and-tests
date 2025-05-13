@@ -22,8 +22,12 @@ class PrivateCarViewsTests(TestCase):
         )
         self.client.force_login(self.user)
 
-        self.manufacturer = Manufacturer.objects.create(name="TestMaker", country="TestLand")
-        self.car = Car.objects.create(model="Test Model", manufacturer=self.manufacturer)
+        self.manufacturer = Manufacturer.objects.create(
+            name="TestMaker", country="TestLand"
+        )
+        self.car = Car.objects.create(
+            model="Test Model", manufacturer=self.manufacturer
+        )
         self.car.drivers.add(self.user)
 
     def test_car_list_view(self):
@@ -32,7 +36,8 @@ class PrivateCarViewsTests(TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(
-            list(res.context["car_list"]), list(cars)
+            list(res.context["car_list"]),
+            list(cars)
         )
         self.assertTemplateUsed(res, "taxi/car_list.html")
 
@@ -62,7 +67,9 @@ class PrivateCarViewsTests(TestCase):
         res = self.client.post(url, data)
 
         self.assertEqual(res.status_code, 302)
-        self.assertTrue(Car.objects.filter(model="New Test Model").exists())
+        self.assertTrue(
+            Car.objects.filter(model="New Test Model").exists()
+        )
 
     def test_car_update_view_get(self):
         url = reverse("taxi:car-update", args=[self.car.id])
